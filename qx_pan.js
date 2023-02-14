@@ -301,7 +301,7 @@ function quark() {
             shares = shares.concat(data);
           } while (_url[1] < parseInt(_total / 100) + 1 && _url[1]++);
           $done({
-            status: 200,
+            status: "HTTP/1.1 200 OK",
             body: JSON.stringify({
               success: true,
               data: { total: 0, offset: 0, [a]: shares },
