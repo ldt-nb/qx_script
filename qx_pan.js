@@ -266,7 +266,7 @@ function quark() {
         ck = decodeURIComponent(body.match(/passwd=([^&]+)/)[1]);
         $prefs.setValueForKey(ck, "quark-ck");
         $done({
-          status: 200,
+          status:"HTTP/1.1 200 OK",
           body: `{"success":true,"data":{"sid":"${ck}"}}`,
         });
         break;
