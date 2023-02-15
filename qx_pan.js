@@ -320,10 +320,11 @@ function quark() {
           /https/,
           "http"
         );
-        $request.url = link;
-        $request.headers.cookie = ck;
-        delete $request.headers.Host;
-        $done($request);
+       myResponse.headers = {
+          Location: link,
+        };
+        myResponse.status = "HTTP/1.1 302 OK";
+        $done(myResponse);
     }
   })().catch(() => $done());
 }
