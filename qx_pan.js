@@ -47,7 +47,7 @@ function aliyun() {
   let refresh_token = jsonTk[1];
   let default_drive_id = jsonTk[2];
   let req = {
-    url: "https://api.aliyundrive.com/adrive/v3/file/list",
+    url: "https://open.aliyundrive.com/adrive/v1.0/openFile/list",
     headers: {
       Authorization: access_token,
       "Content-Type": "application/json",
