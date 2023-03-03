@@ -57,7 +57,7 @@ function aliyun() {
     switch (url.match(/(auth|entry)\.cgi$/)?.[0]) {
       case "auth.cgi":
         try {
-          let password = refresh_token || body.match(/passwd=([^&]*)/)[1];
+          let password = body.match(/passwd=([^&]*)/)[1];
           req.url = "https://api.nn.ci/alist/ali_open/token";
           req.body = `{ "client_id": "", "client_secret": "", "grant_type": "refresh_token", "refresh_token": "${password}" }`;
           let auth_json = await http(req, "post");
