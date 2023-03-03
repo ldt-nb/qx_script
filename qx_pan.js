@@ -57,11 +57,14 @@ function aliyun() {
     switch (url.match(/(auth|entry)\.cgi$/)?.[0]) {
       case "auth.cgi":
         try {
-          let password = $prefs.valueForKey('ali_refresh_token') || refresh_token || body.match(/passwd=([^&]*)/)[1];
-          req.url = "https://auth.aliyundrive.com/v2/account/token";
-          req.body = `{"refresh_token":"${password}","grant_type":"refresh_token"}`;
+          let password = refresh_token || body.match(/passwd=([^&]*)/)[1];
+          req.url = "https://api.nn.ci/alist/ali_open/token";
+          req.body = `{ "client_id": "", "client_secret": "", "grant_type": "refresh_token", "refresh_token": "${password}" }`;
           let auth_json = await http(req, "post");
-          let jstk = `${auth_json.access_token},${auth_json.refresh_token},${auth_json.default_drive_id}`;
+          req.url = "https://open.aliyundrive.com/adrive/v1.0/user/getDriveInfo";
+          req.headers.Authorization = "Bearer "+ auth_json.access_token;
+          let auth_json2 = await http(req, "post");
+          let jstk = `${auth_json.access_token},${auth_json.refresh_token},${auth_json2.default_drive_id}`;
           $prefs.setValueForKey(jstk, "ali_token");
           let obj = {
             success: true,
