@@ -108,7 +108,18 @@ function aliyun() {
             req.body = JSON.stringify(_body);
             let shares = [];
             do {
-              var { items, next_marker } = await http(req, "post");
+              const resp_list = await http(req, "post");
+              if(resp_list == null){
+                $done({
+                  method: "GET",
+                  status: "HTTP/1.1 302 OK",
+                  headers: {
+                    Location: 'http://aliyun.example.com:5000/webapi/auth.cgi'
+                  },
+                });
+                return
+              }
+              var { items, next_marker } = resp_list;
               let data = items.map((item) => {
                 return {
                   isdir: item.type === "folder",
